@@ -8,7 +8,6 @@ class rgb {
 }
 
 
-
 // Makes the class block an object of which is the blocks display
 class block {
   // Takes a width, height, and a p5 vector
@@ -33,9 +32,19 @@ function randint(min, max) {
 }
 
 
+function displayBlocks(blocks, text){
+  // Clear the screen
+  clear();
+  // Display the blocks
+  for (var i in blocks){
+    blocks[i].draw_block();
+  }
+}
+
 
 // Flags the canvas
 var cnv;
+
 
 // Centers the canvas
 function centerCanvas() {
@@ -43,6 +52,43 @@ function centerCanvas() {
   var y = (windowHeight - height) / 2;
   cnv.position(x, y);
 }
+
+
+
+
+// Re-centers the canvas when the window is resized
+function windowResized() {
+  centerCanvas();
+}
+
+
+function bubbleSort(blocks){
+  var lastBlock;
+  var currentBlock;
+  while (true) {
+    var madeSwap = false;
+    for (var i in blocks){
+      // deepcode ignore UseStrictEquality: Doesn't compare correctly with triple equals
+      if (i == 0){
+        continue;
+      }
+      lastBlock = blocks[i-1];
+      currentBlock = blocks[i];
+      // If the last block is taller than the current block
+      if (lastBlock.height > currentBlock.height) {
+          // Swap them
+          blocks.splice(i-1, 2, currentBlock, lastBlock);
+          madeSwap = true;
+      }
+    }
+    if (!madeSwap){
+      return blocks;
+
+    }
+  }
+}
+
+
 // Sets up the canvas
 function setup() {
   cnv = createCanvas(1000, 600);
@@ -52,11 +98,11 @@ function setup() {
   // Adds block objects to the array blocks
   var blocks = [];
   // Stores the block width
-  var blockWidth = 10;
+  var blockWidth = 50;
   // Determines the number of blocks based on the number that can fit on screen
-  var num_blocks = width / blockWidth;
+  var num_blocks = Math.floor(width / blockWidth);
   for (var i = 0; i < num_blocks; i++){
-    var blockHeight = randint(10,500);
+    var blockHeight = randint(10,height);
     // Add a new block object to the blocks array
     append(blocks,
       new block(
@@ -66,17 +112,10 @@ function setup() {
         // down. (i * blockWidth) also makes the blocks touch each other
         createVector(i * blockWidth, height - blockHeight),
         // Give the block a rgb object
-        new rgb(200, 0, 200)
+        new rgb(100, 75, 200)
     ));
   }
+  blocks = bubbleSort(blocks);
+  displayBlocks(blocks);
 
-  // Display the blocks
-  for (var i in blocks){
-    blocks[i].draw_block();
-  }
-
-}
-// Re-centers the canvas when the window is resized
-function windowResized() {
-  centerCanvas();
 }
