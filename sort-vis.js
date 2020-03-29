@@ -94,11 +94,11 @@ function draw() {
   background(0);
   for (var i in blocks) {
     // If the state is 0 set the fill color to red
-    if (states[i] == 0){
+    if (states[i] === 0){
       fill(235, 61, 52);
     }
     // If the state is 1 set the fill color to white
-    else if (states[i] == 1) {
+    else if (states[i] === 1) {
       fill(220, 220, 220);
     }
     // If the state is 1 set the fill color to green
