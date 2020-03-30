@@ -33,18 +33,23 @@ async function setup() {
   cnv = createCanvas(windowWidth, windowHeight);
   // Center the Canvas
   centerCanvas();
-  // Add a random block height in the available space
-  for (var i = 0; i < floor(width / w); i++) {
-    // Random height bit
-    blocks[i] = randint(10, height - 10);
-    // States is 1 for not being sorted right now
-    states[i] = 1;
+  // Main sorting loop
+  while (true){
+    // Add a random block height in the available space
+    for (var i = 0; i < floor(width / w); i++) {
+      // Random height bit
+      blocks[i] = randint(10, height - 10);
+      // States is 1 for not being sorted right now
+      states[i] = 1;
+    }
+    // Bubble sort the blocks
+    await bubblesort();
+    for (var i in states){
+      states[i] = 2;
+    }
+    await sleep(5000);
   }
-  // Bubble sort the blocks
-  await bubblesort();
-  for (var i in states){
-    states[i] = 2;
-  }
+
 }
 
 async function bubblesort() {
