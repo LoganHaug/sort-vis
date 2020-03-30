@@ -1,42 +1,53 @@
-// Generates a random integer
+/*
+  Written By Logan Haug
+  Visualizes sorting algorithms using p5 JS
+*/
+/** Generates a random integer
+  @param {int} min minimum value of the generated random integer
+  @param {int} max maximum value of the generated random integer
+  @return {int} the random integer
+*/
 function randint(min, max) {
   return Math.floor(Math.random() * (max - min) ) + min;
 }
 
+/** Sleep function
+  @param {int} ms number of milliseconds that the computer will sleep
+  @return {Promise} promise that sets a timeout
+*/
 function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 // Flags the canvas
-var cnv;
+let cnv;
 
-// Centers the canvas
+/** Centers the canvas */
 function centerCanvas() {
-  var x = (windowWidth - width) / 2;
-  var y = (windowHeight - height) / 2;
-  cnv.position(x, y);
+  // Centers the canvas
+  cnv.position((windowWidth - width) / 2, (windowHeight - height) / 2);
 }
-
-// Re-centers the canvas when the window is resized
+/* eslint-disable no-unused-vars */
+/** Recenters the canvas on window re-size */
 function windowResized() {
   centerCanvas();
 }
 
 
 // Initialize block width, block height array, and block state array
-var w = 10;
+const w = 10;
 let blocks = [];
-var states = [];
-
+const states = [];
+/** p5 Setup function */
 async function setup() {
   // Create the canvas
   cnv = createCanvas(windowWidth, windowHeight);
   // Center the Canvas
   centerCanvas();
   // Main sorting loop
-  while (true){
+  while (true) {
     // Add a random block height in the available space
-    for (var i = 0; i < floor(width / w); i++) {
+    for (let i = 0; i < floor(width / w); i++) {
       // Random height bit
       blocks[i] = randint(10, height - 10);
       // States is 1 for not being sorted right now
@@ -44,73 +55,79 @@ async function setup() {
     }
     // Bubble sort the blocks
     await bubblesort();
-    for (var i in states){
+    for (let i = 0; i < states.length - 1; i++) {
       states[i] = 2;
     }
     await sleep(5000);
   }
-
 }
-
+/** Bubblesort function */
 async function bubblesort() {
   // Flag the indexes that we will compare later
-  var current_value;
-  var previous_value;
+  let currentValue;
+  let previousValue;
   // Flag made_swap
-  var made_swap = false;
-  var times_sorted = 0;
+  let madeSwap = false;
+  let timesSorted = 0;
   // Infinite loop
-  while (true){
-      // Flag whether or not a swap has been made
-      made_swap = false;
-      // Iterate through each value in blocks
-      for (var i = 0; i < blocks.length - (1 + times_sorted); i++){
-        current_value = i;
-        next_value = i + 1;
-        states[current_value] = 0;
-        states[next_value] = 0;
-        await sleep(0.001);
-        if (blocks[current_value] > blocks[next_value]){
-          blocks = swap(blocks, current_value);
-          made_swap = true;
-          }
-          states[current_value] = 1;
-          states[next_value] = 1;
-          }
-      times_sorted++;
-      if (!made_swap){
-        break;
-        }
-
+  while (true) {
+    // Flag whether or not a swap has been made
+    madeSwap = false;
+    // Iterate through each value in blocks
+    for (let i = 0; i < blocks.length - (1 + timesSorted); i++) {
+      // Stores the current value, and the next value
+      currentValue = i;
+      nextValue = i + 1;
+      // Sets the current state to red (being sorted) for both blocks
+      states[currentValue] = 0;
+      states[nextValue] = 0;
+      // Sleeps
+      await sleep(0.001);
+      // If the next block is smaller than the current block, swap the,
+      if (blocks[currentValue] > blocks[nextValue]) {
+        blocks = swap(blocks, currentValue);
+        madeSwap = true;
+      }
+      states[currentValue] = 1;
+      states[nextValue] = 1;
     }
+    timesSorted++;
+    if (!madeSwap) {
+      break;
+    }
+  }
 }
 
-
-function swap(array, pos){
+/** Swaps an element in an array with the one above it
+  @param {array} array the array to perform the swap on
+  @param {int} pos position in the array
+  @return {array} returns the new array
+*/
+function swap(array, pos) {
   temp = array[pos];
   array[pos] = array[pos + 1];
   array[pos + 1] = temp;
   return array;
 }
+
+/** p5 draw function */
 function draw() {
   // Remove the ugly stroke from the rectangle
   noStroke();
   // Set the background to black
   background(0);
-  for (var i in blocks) {
-    // If the state is 0 set the fill color to red
-    if (states[i] === 0){
-      fill(235, 61, 52);
-    }
-    // If the state is 1 set the fill color to white
-    else if (states[i] === 1) {
-      fill(220, 220, 220);
-    }
-    // If the state is 1 set the fill color to green
-    else if (states[i] == 2) {
-      fill(95, 232, 104);
+  for (let i = 0; i < blocks.length - 1; i++) {
+    switch (states[i]) {
+      case (0):
+        fill(235, 61, 52);
+        break;
+      case (1):
+        fill(220, 220, 220);
+        break;
+      case (2):
+        fill(95, 232, 104);
+        break;
     }
     rect(i * w, height - blocks[i], w, blocks[i]);
   }
-
 }

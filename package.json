@@ -1,0 +1,26 @@
+{
+  "name": "sort-vis",
+  "version": "1.0.0",
+  "description": "Visualizes sorting algorithms using p5 JS",
+  "main": "sort-vis.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LoganHaug/sort-vis.git"
+  },
+  "keywords": [
+    "Sorting-Visualization"
+  ],
+  "author": "LoganHaug",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LoganHaug/sort-vis/issues"
+  },
+  "homepage": "https://github.com/LoganHaug/sort-vis#readme",
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-google": "^0.14.0"
+  }
+}
