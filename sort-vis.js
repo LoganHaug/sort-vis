@@ -30,7 +30,7 @@ var states = [];
 
 async function setup() {
   // Create the canvas
-  cnv = createCanvas(1000, 600);
+  cnv = createCanvas(windowWidth, windowHeight);
   // Center the Canvas
   centerCanvas();
   // Add a random block height in the available space
