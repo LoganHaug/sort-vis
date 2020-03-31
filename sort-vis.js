@@ -61,7 +61,7 @@ async function setup() {
     for (let i = 0; i < states.length - 1; i++) {
       states[i] = 2;
     }
-    // sovietAnthem.play();
+    sovietAnthem.play();
     await sleep(5000);
     break;
   }
