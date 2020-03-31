@@ -32,8 +32,10 @@ function centerCanvas() {
 function windowResized() {
   centerCanvas();
 }
-
-
+let sovietAnthem;
+function preload() {
+  sovietAnthem = loadSound("sovietAnthem.mp3");
+}
 // Initialize block width, block height array, and block state array
 const w = 10;
 let blocks = [];
@@ -47,20 +49,51 @@ async function setup() {
   // Main sorting loop
   while (true) {
     // Add a random block height in the available space
-    for (let i = 0; i < floor(width / w); i++) {
+    for (let i = 0; i < floor(width / w) + 1; i++) {
       // Random height bit
       blocks[i] = randint(10, height - 10);
       // States is 1 for not being sorted right now
       states[i] = 1;
     }
-    // Bubble sort the blocks
-    await bubblesort();
+    console.log(blocks.length);
+    // Sort the blocks
+    await stalinSort();
     for (let i = 0; i < states.length - 1; i++) {
       states[i] = 2;
     }
+    // sovietAnthem.play();
     await sleep(5000);
+    break;
   }
 }
+
+/** Stalin-sort, removes any element that isn't already sorted */
+async function stalinSort() {
+  let currentValue = 0;
+  let nextValue = 1;
+  states[currentValue] = 0;
+  states[nextValue] = 0;
+  for (let i = 0; i < blocks.length - 1; i++) {
+    while (true) {
+      await sleep(1);
+      if (nextValue === blocks.length - 1){
+        break;
+      }
+      else if (blocks[currentValue] > blocks[nextValue]) {
+        await sleep(500);
+        blocks.splice(nextValue, 1);
+        states.splice(nextValue, 1);
+      } else {
+        break;
+      }
+    }
+    states[currentValue] = 0;
+    states[nextValue] = 0;
+    currentValue++;
+    nextValue++;
+  }
+}
+
 /** Bubblesort function */
 async function bubblesort() {
   // Flag the indexes that we will compare later
@@ -83,8 +116,11 @@ async function bubblesort() {
       states[nextValue] = 0;
       // Sleeps
       await sleep(0.001);
-      // If the next block is smaller than the current block, swap the,
-      if (blocks[currentValue] > blocks[nextValue]) {
+      // If the next block is smaller than the current block, swap them
+      if (nextValue === blocks.length - 1){
+        break;
+      }
+      else if (blocks[currentValue] > blocks[nextValue]) {
         blocks = swap(blocks, currentValue);
         madeSwap = true;
       }
