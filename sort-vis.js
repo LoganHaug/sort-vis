@@ -80,7 +80,7 @@ async function stalinSort() {
         break;
       }
       else if (blocks[currentValue] > blocks[nextValue]) {
-        await sleep(500);
+        await sleep(1);
         blocks.splice(nextValue, 1);
         states.splice(nextValue, 1);
       } else {
