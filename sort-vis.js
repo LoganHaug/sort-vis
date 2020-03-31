@@ -33,8 +33,9 @@ function windowResized() {
   centerCanvas();
 }
 let sovietAnthem;
+/** p5 JS preload function, loads sovietAnthem before executing setup() */
 function preload() {
-  sovietAnthem = loadSound("sovietAnthem.mp3");
+  sovietAnthem = loadSound('sovietAnthem.mp3');
 }
 // Initialize block width, block height array, and block state array
 const w = 10;
@@ -76,10 +77,9 @@ async function stalinSort() {
   for (let i = 0; i < blocks.length - 1; i++) {
     while (true) {
       await sleep(1);
-      if (nextValue === blocks.length - 1){
+      if (nextValue === blocks.length - 1) {
         break;
-      }
-      else if (blocks[currentValue] > blocks[nextValue]) {
+      } else if (blocks[currentValue] > blocks[nextValue]) {
         await sleep(1);
         blocks.splice(nextValue, 1);
         states.splice(nextValue, 1);
@@ -117,10 +117,9 @@ async function bubblesort() {
       // Sleeps
       await sleep(0.001);
       // If the next block is smaller than the current block, swap them
-      if (nextValue === blocks.length - 1){
+      if (nextValue === blocks.length - 1) {
         break;
-      }
-      else if (blocks[currentValue] > blocks[nextValue]) {
+      } else if (blocks[currentValue] > blocks[nextValue]) {
         blocks = swap(blocks, currentValue);
         madeSwap = true;
       }
