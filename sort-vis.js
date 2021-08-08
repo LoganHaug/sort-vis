@@ -62,9 +62,7 @@ async function setup() {
     for (let i = 0; i < states.length - 1; i++) {
       states[i] = 2;
     }
-    sovietAnthem.play();
-    await sleep(5000);
-    break;
+    await sleep(1000);
   }
 }
 
@@ -76,11 +74,10 @@ async function stalinSort() {
   states[nextValue] = 0;
   for (let i = 0; i < blocks.length - 1; i++) {
     while (true) {
-      await sleep(1);
       if (nextValue === blocks.length - 1) {
         break;
       } else if (blocks[currentValue] > blocks[nextValue]) {
-        await sleep(1);
+        await sleep(20)
         blocks.splice(nextValue, 1);
         states.splice(nextValue, 1);
       } else {
@@ -114,8 +111,6 @@ async function bubblesort() {
       // Sets the current state to red (being sorted) for both blocks
       states[currentValue] = 0;
       states[nextValue] = 0;
-      // Sleeps
-      await sleep(0.001);
       // If the next block is smaller than the current block, swap them
       if (nextValue === blocks.length - 1) {
         break;
@@ -130,6 +125,7 @@ async function bubblesort() {
     if (!madeSwap) {
       break;
     }
+    await sleep(20)
   }
 }
 
