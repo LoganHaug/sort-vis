@@ -5,6 +5,6 @@ Requirements
 - Requires a local node server
 
 Install/Setup
-- Install node.js by running "npm install http-server"
+- Install node.js http-server by running "npm install http-server"
 - Then while in the sort-vis folder run "http-server"
 - Finally connect to "http://localhost:8080/" and open sort-vis.html

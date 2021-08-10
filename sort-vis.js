@@ -2,19 +2,12 @@
 	Written By Logan Haug
 	Visualizes sorting algorithms using p5 JS
 */
-/** Generates a random integer
-	@param {int} min minimum value of the generated random integer
-	@param {int} max maximum value of the generated random integer
-	@return {int} the random integer
-*/
+/* Generates a random integer **/
 function randint(min, max) {
 	return Math.floor(Math.random() * (max - min) ) + min;
 }
 
-/** Sleep function
-	@param {int} ms number of milliseconds that the computer will sleep
-	@return {Promise} promise that sets a timeout
-*/
+/* Sleep function **/
 function sleep(ms) {
 	return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -22,18 +15,17 @@ function sleep(ms) {
 // Flags the canvas
 let cnv;
 
-/** Centers the canvas */
+/* Centers the canvas */
 function centerCanvas() {
 	// Centers the canvas
 	cnv.position((windowWidth - width) / 2, (windowHeight - height) / 2);
 }
-/* eslint-disable no-unused-vars */
-/** Recenters the canvas on window re-size */
+/* Recenters the canvas on window re-size */
 function windowResized() {
 	centerCanvas();
 }
 let sovietAnthem;
-/** p5 JS preload function, loads sovietAnthem before executing setup() */
+/* p5 JS preload function, loads sovietAnthem before executing setup() */
 function preload() {
 	// sovietAnthem = loadSound('sovietAnthem.mp3');
 }
@@ -46,7 +38,7 @@ let sort_text = {
 	swaps: 0
 };
 
-/** p5 Setup function */
+/* p5 Setup function */
 async function setup() {
 	// Create the canvas
 	cnv = createCanvas(windowWidth, windowHeight);
@@ -74,7 +66,7 @@ async function setup() {
 	}
 }
 
-/** Stalin-sort, removes any element that isn't already sorted */
+/* Stalin-sort, removes any element that isn't already sorted */
 async function stalinSort() {
 	let currentValue = 0;
 	let nextValue = 1;
@@ -99,7 +91,7 @@ async function stalinSort() {
 	}
 }
 
-/** Bubblesort function */
+/* Bubblesort function */
 async function bubblesort() {
 	var first, second;
 	let n = blocks.length;
@@ -121,18 +113,14 @@ async function bubblesort() {
 
 
 
-/** Swaps an element in an array with the one above it
-	@param {array} array the array to perform the swap on
-	@param {int} pos position in the array
-	@return {array} returns the new array
-*/
+/* Swaps an element in an array with the one above it */
 function swap(array, pos, pos_2) {
 	temp = array[pos];
 	array[pos] = array[pos_2];
 	array[pos_2] = temp;
 }
 
-/** p5 draw function */
+/* p5 draw function */
 function draw() {
 	// Remove the ugly stroke from the rectangle
 	noStroke();
